@@ -15,6 +15,7 @@ import { BrowserRouter, Link } from 'react-router-dom';
 class App extends Component {
   constructor(props) {
     super(props);
+    
     var wapunalku = new Date(2019, 3, 18, 0);
     var now = new Date();
     var timetowappu = new Date(Date.parse(wapunalku) - Date.parse(now));
@@ -22,13 +23,26 @@ class App extends Component {
     var participation = ParticipationInfo.fi;
     var header = HeaderText.fi;
     var titles = TitleTexts.fi;
-    if (location.search.includes("lang=en")) {
+    if (window.location.search.includes("lang=en")) {
       tapahtumat = EventsData.en;
       participation = ParticipationInfo.en;
       header = HeaderText.en;
       titles = TitleTexts.en;
     }
-    this.state = { lang: "en", vappuun: timetowappu, päivät: 0, tunnit: 0, minuutit: 0, sekuntit: 0, tapahtumat: tapahtumat, participation: participation, titles: titles, header: header, vitsi: "", wapunalku: wapunalku };
+    this.state = { 
+      lang: "en", 
+      vappuun: timetowappu, 
+      päivät: 0, 
+      tunnit: 0, 
+      minuutit: 0, 
+      sekuntit: 0, 
+      tapahtumat: tapahtumat, 
+      participation: participation, 
+      titles: titles, 
+      header: header, 
+      vitsi: "", 
+      wapunalku: wapunalku 
+    };
   }
 
   tick() {
@@ -45,7 +59,8 @@ class App extends Component {
     if(Date.parse(this.state.wapunalku) >= Date.parse(new Date())) {
       this.setState({
         vappuun: new Date(Date.parse(this.state.wapunalku) - Date.parse(now)),
-        vappustring: days+':'+hours+':'+minutes+':'+seconds
+        vappustring: days + this.state.header.days + " " + hours + 
+        this.state.header.hours + " " + minutes + this.state.header.minutes + " " + seconds + this.state.header.seconds
         
       })
     }
@@ -80,9 +95,9 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-      <div className="App">
+      <div>
         <div className="row nomargin baselinealign margin20bottom">
-          <div className="App-header card nomargin orange white-text">
+          <div className="App-header card nomargin pink lighten-3 white-text">
             <div className="col s12 l1 m12 logo">
               <img src={logo} height="70px" alt="logo"></img>
             </div>
@@ -116,7 +131,7 @@ class App extends Component {
           <div className="padding20 col s12 m12 l8">
           <ResponsiveEmbed src='https://www.youtube.com/embed/Kdf850xiZzc' allowFullScreen />
             <div className="grey lighten-5 card flex-column margintop1">
-              <div className="padding20 card orange lighten-1 white-text nomargin">
+              <div className="padding20 card pink lighten-3 white-text nomargin">
                 <h5>{this.state.titles.upcoming}</h5>
               </div>
 
@@ -133,7 +148,7 @@ class App extends Component {
 
           <div className="padding20 col s12 m12 l4">
             <div className="grey lighten-5 card flex-column nomargintop">
-              <div className="padding20 card orange lighten-1 white-text nomargin">
+              <div className="padding20 card pink lighten-3 white-text nomargin">
                 <h5>{this.state.titles.participating}</h5>
               </div>
               <div className="margin20">
@@ -148,7 +163,7 @@ class App extends Component {
             </div>
 
             <div className="grey lighten-5 card flex-column">
-              <div className="padding20 card orange lighten-1 white-text nomargin">
+              <div className="padding20 card pink lighten-3 white-text nomargin">
                 <h5>{this.state.titles.humour}</h5>
               </div>
               <div className="margin20">
@@ -161,17 +176,17 @@ class App extends Component {
             </div>
 
             <div className="grey lighten-5 card flex-column">
-              <div className="padding20 card orange lighten-1 white-text nomargin">
+              <div className="padding20 card pink lighten-3 white-text nomargin">
                 <h5>{this.state.titles.playlist}</h5>
               </div>
               <iframe className="playlist" src="https://embed.spotify.com/?uri=spotify%3Auser%3A1166189585%3Aplaylist%3A4N42jOH9c5ZEg17tCrtauc" height="380"></iframe>
             </div>
 
             <div className="grey lighten-5 card flex-column">
-              <div className="padding20 card orange lighten-1 white-text nomargin">
+              <div className="padding20 card pink lighten-3 white-text nomargin">
                 <a href="https://wappuradio.fi/"><img src={wappuradio} width="135" height="90"></img></a>
               </div>
-              <audio controls crossOrigin className="playlist">
+              <audio controls crossOrigin className="playlist margintop1">
                 <source src="//stream.wappuradio.fi/wappuradio.mp3" type="audio/mpeg"></source>
               </audio>
               <div className="margin20">
@@ -180,7 +195,7 @@ class App extends Component {
             </div>
 
             <div className="grey lighten-5 card flex-column">
-              <div className="padding20 card orange lighten-1 white-text nomargin">
+              <div className="padding20 card pink lighten-3 white-text nomargin">
                 <h5>{this.state.titles.social}</h5>
               </div>
               <div className="margin20">
